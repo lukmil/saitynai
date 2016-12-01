@@ -1,0 +1,117 @@
+{% extends '@App/base.html.twig' %}
+
+{% block body %}
+
+    <style>
+        table, th, td {
+            border: 2px solid green;
+            border-collapse: collapse;
+        }
+    </style>
+    <div class="container">
+        <h6></h6>
+
+        <div class="tab-content">
+            <div id="matches" class="tab-pane fade in active">
+                <h3>Choose champions</h3>
+                <select id="name">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                            {{ champ.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <select id="name2">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                            {{ champ.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="button" onclick="gettingValue()">Choose</button><br>
+                <button type="button" onclick="show()">Show Results</button>
+                <button type="button" onclick="hide()">Hide Results</button>
+                <br>
+
+                {% set tes = "" %}
+                {% for t in test %}
+                    {% set tes =  t.stronger  %}
+                {% endfor %}
+
+                {% set name = ""  %}
+                {% set name2 = ""  %}
+                {% for t in test %}
+                    {% set name =  t.champion1  %}
+                    {% set name2 =  t.champion2  %}
+                {% endfor %}
+
+                <table id="MatchesTable" style="display:none">
+                    <tr>
+
+                        <th>First Champion</th>
+                        <th>Second Champion</th>
+                        <th>Stronger</th>
+                    </tr>
+                    <tr>
+                        {% for c in champions %}
+
+                            {%  if (tes == c.name) %}
+                                <td>{{ name }}</td>
+                                <td>{{ name2 }}</td>
+
+                                <td>{{ tes }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for c in champions %}
+                        {%  if (name == c.name) %}
+                        <td> <img src="{{ c.img }}"></td>
+                        {% endif %}
+                        {% endfor %}
+                        {% for c in champions %}
+                        {%  if (name2 == c.name) %}
+                            <td> <img src="{{ c.img }}"></td>
+                        {% endif %}
+                        {% endfor %}
+                        {% for c in champions %}
+                        {%  if (tes == c.name) %}
+                            <td> <img src="{{ c.img }}"></td>
+                         {% endif %}
+                        {% endfor %}
+                    </tr>
+
+                </table>
+
+
+            <script>
+                function show(){
+                    document.getElementById("MatchesTable").style.display="table";
+                }
+                function hide(){
+                    document.getElementById("MatchesTable").style.display="none";
+                }
+                function gettingValue() {
+                    var test = document.getElementById("name").value;
+                    var test2 = document.getElementById("name2").value;
+                    var newName = test.substr(19);
+                    var newName2 = test2.substr(19);
+                    console.log(newName + "," +newName2);
+                    if (newName == newName2){
+                        window.alert('Choose different champs')
+                        throw new Error("Choose different champs!");
+                    }
+                    window.location.replace("/matches/"+newName + "," +newName2);
+
+                    return null;
+                }
+
+            </script>
+        </div>
+    </div>
+{% endblock %}
+
+
+

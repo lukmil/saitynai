@@ -1,0 +1,184 @@
+{% extends '@App/base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h6></h6>
+        <ul class="nav nav-pills">
+            <li class="active"><a data-toggle="pill" href="#champions">Champions</a></li>
+            <li><a data-toggle="pill" href="#strongerLowerChampion">Stronger/Lowest</a></li>
+            <li><a data-toggle="pill" href="#addChamp">Add champion</a></li>
+            <li><a data-toggle="pill" href="#editChamp">Edit champion</a></li>
+            <li><a data-toggle="pill" href="#deleteChamp">Delete champion</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="champions" class="tab-pane fade in active">
+
+                <table id="ChampionsTable" class="tablesorter" cellspacing="1" style="width: 30%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Place</th>
+                            <th>Image</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for champ in champions %}
+                            <tr>
+                                <td> {{ champ.id }} </td>
+                                <td>{{ champ.name }} </td>
+                                <td> {{ champ.place }} </td>
+                                <td> <img src="{{ champ.img }}" height="42" width="42"> </td>
+                                <td> <a href="/champion/{{ champ.id }}">Choose</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="strongerLowerChampion" class="tab-pane fade">
+                <select id="stronger">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                            {{ champ.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="button" onclick="gettingStrongerValue()">Choose</button>
+<br>
+                {% set pick = "" %}
+                {% for s in stronger%}
+                    {% set pick =  s.champion1  %}
+                {% endfor %}
+                {% for c in champions %}
+                {%  if (pick == c.name) %}
+                    Pasirinkta : {{ pick }}
+                {% endif %}
+                {% endfor %}
+<br>
+                Stipresni: <br>
+                {% for s in stronger %}
+                    {% if s.champion2 == s.stronger %}
+                        {% set checkHigh =  s.champion1  %}
+                        {% set checkHigh2 =  s.champion2  %}
+                        {% set checkHigh3 =  s.stronger  %}
+                        {% for c in champions %}
+                            {% if c.name == checkHigh2   %}
+
+                                {{ c.name }} <img src="{{ c.img }}"> <br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+<br>
+                Silpnesni: <br>
+                {% for s in stronger %}
+                    {% if s.champion1 == s.stronger %}
+                        {% set check =  s.champion1  %}
+                        {% set check2 =  s.champion2  %}
+                        {% set check3 =  s.stronger  %}
+
+                        {% for c in champions %}
+                            {% if c.name == check2  %}
+
+                                {{ c.name }} <img src="{{ c.img }}"> <br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div id="addChamp" class="tab-pane fade">
+                Adding a champion:
+
+                {{ form_start(form2) }}
+                {{ form_row(form2.name) }}
+                {{ form_row(form2.place) }}
+                {{ form_row(form2.img) }}
+
+
+                <button class="btn btn-large btn-primary" type="submit">Add!</button>
+
+                {{ form_end(form2) }}
+            </div>
+            <div id="editChamp" class="tab-pane fade">
+                Choose Champion:
+
+
+                <select id="name">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                            {{ champ.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="button" onclick="gettingValue()">Choose</button>
+
+
+
+                {{ form_start(form3) }}
+                {{ form_row(form3.name) }}
+                {{ form_row(form3.place) }}
+                {{ form_row(form3.img) }}
+                <button class="btn btn-large btn-primary" type="submit">Edit!</button>
+                {{ form_end(form3) }}
+            </div>
+            <div id="deleteChamp" class="tab-pane fade">
+                Choose Champion:
+            <select id="name2">
+                <option selected disabled>Choose here</option>
+                {% for champ in champions %}
+                    <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                        {{ champ.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="button" onclick="gettingValue2()">Choose</button>
+
+
+
+            {{ form_start(form4) }}
+            {{ form_row(form4.name) }}
+            {{ form_row(form4.place) }}
+            {{ form_row(form4.img) }}
+            <button class="btn btn-large btn-primary" type="submit">Delete!</button>
+            {{ form_end(form4) }}
+        </div>
+
+            <script>
+                function gettingValue() {
+                    console.log(document.getElementById("name").value);
+                    var test = document.getElementById("name").value;
+                    var newName = test.substr(19);
+                    //console.log("/champion/" +newName);
+                    window.location.replace("/champion/" +newName);
+
+                }
+                function gettingValue2() {
+                    console.log(document.getElementById("name2").value);
+                    var test = document.getElementById("name2").value;
+                    var newName = test.substr(19);
+                    //console.log("/champion/" +newName);
+                    window.location.replace("/champion/" +newName);
+
+                }
+                function gettingStrongerValue() {
+                    console.log(document.getElementById("stronger").value);
+                    var test = document.getElementById("stronger").value;
+                    var newName = test.substr(19);
+                    console.log(newName);
+                    window.location.replace("/champion/" +newName);
+                    return newName;
+
+
+                }
+            </script>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+

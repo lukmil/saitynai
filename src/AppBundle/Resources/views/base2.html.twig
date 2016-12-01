@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Saitynas{% endblock %}</title>
+
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="{{ asset("bundles/framework/css/bootstrap.css") }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<style>
+    body {
+        background-image: url('https://www.skotcher.com/wall/7b5b11280d4bc8f95375a090f8d8ddd2/league-of-legends-white.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size:     cover;
+        background-position: center center;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a, .dropbtn {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover, .dropdown:hover .dropbtn {
+        background-color: red;
+    }
+
+    li.dropdown {
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    .dropdown-content a:hover {background-color: #f1f1f1}
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+</style>
+<body >
+<ul>
+    <li><a href="{{ path('home') }}">Home</a></li>
+
+    <li style="float:right"><a class="active" href="{{ path('authentication_register') }}">Sign Up</a></li>
+    <li style="float:right"><a class="active" href="{{ path('authentication_login') }}">Sign In</a></li>
+</ul>
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
+{% block javascripts %}{% endblock %}
+<script src="{{ asset("bundles/framework/js/jquery-2.2.4.js") }}"></script>
+<script src="{{ asset("bundles/framework/js/bootstrap.js") }}"></script>
+<script src="{{ asset("bundles/framework/js/script.js") }}"></script>
+<script src="{{ asset("bundles/framework/js/tablesorter.js") }}"></script>
+</body>
+</html>

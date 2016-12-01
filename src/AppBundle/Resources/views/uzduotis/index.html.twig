@@ -1,0 +1,47 @@
+{% extends '@App/base.html.twig' %}
+
+
+
+{% block body %}
+<style>
+    text{
+        text-align: right
+    }
+</style>
+
+<div class="container">
+    <h6></h6>
+    <ul >
+        <li ><a data-toggle="pill" href="#userEdit">Edit your information</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="homes" class="tab-pane fade in active">
+            <p class="text-center h1">Hello {{ user.firstName }}!
+            </p>
+
+            <h3> T120B165	Saityno taikomųjų programų projektavimas </h3>
+
+            <div class ="text">IFF-3/1 Lukas Milaševičius</div>
+        </div>
+
+        <div id="userEdit" class="tab-pane ">
+            <br>
+            {{ form_start(form)  }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.lastName) }}
+            {{ form_row(form.country) }}
+            {{ form_row(form.city) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.plainPassword.first) }}
+            {{ form_row(form.plainPassword.second) }}
+            <button class="btn btn-large btn-primary" type="submit">Change!</button>
+            {{ form_end(form) }}
+
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+

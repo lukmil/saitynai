@@ -1,0 +1,297 @@
+{% extends '@App/base.html.twig' %}
+
+{% block body %}
+
+    <style>
+        table, th, td {
+            border: 2px solid green;
+            border-collapse: collapse;
+        }
+    </style>
+    <div class="container">
+
+
+        <div class="tab-content">
+
+                <h3>Choose champions</h3>
+            Top Champions
+            <select id="name">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        {% if champ.place == "Top" %}
+                        <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                            {{ champ.name }}
+                        </option>
+                    {% endif %}
+                    {% endfor %}
+            </select>
+            <select id="name2">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        {% if champ.place == "Top" %}
+                            <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                                {{ champ.name }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+
+            </select>
+            <br>
+            Mid Champions
+            <select id="name3">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        {% if champ.place == "Mid" %}
+                            <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                                {{ champ.name }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+            </select>
+            <select id="name4">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        {% if champ.place == "Mid" %}
+                            <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                                {{ champ.name }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+            </select>
+            <br>
+            Bot Champions
+                <select id="name5">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        {% if champ.place == "Bottom" %}
+                            <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                                {{ champ.name }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                <select id="name6">
+                    <option selected disabled>Choose here</option>
+                    {% for champ in champions %}
+                        {% if champ.place == "Bottom" %}
+                            <option value="{{ path('champHome', {champion: champ.id}) }}" >
+                                {{ champ.name }}
+                            </option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            <br>
+                <button type="button" onclick="gettingValue()">Choose</button><br>
+            <button type="button" onclick="show()">Show Results</button>
+            <button type="button" onclick="hide()">Hide Results</button>
+            {% set top = "" %}
+            {% for t in topChamps%}
+                {% set top =  t.stronger  %}
+            {% endfor %}
+            {% set mid = "" %}
+            {% for m in midChamps%}
+                {% set mid =  m.stronger  %}
+            {% endfor %}
+            {% set bot = "" %}
+            {% for b in botChamps%}
+                {% set bot =  b.stronger  %}
+            {% endfor %}
+
+            {% set topName = ""  %}
+            {% set topName2 = ""  %}
+            {% for t in topChamps %}
+                {% set topName =  t.champion1  %}
+                {% set topName2 =  t.champion2  %}
+            {% endfor %}
+
+            {% set midName = ""  %}
+            {% set midName2 = ""  %}
+            {% for m in midChamps %}
+                {% set midName =  m.champion1  %}
+                {% set midName2 =  m.champion2  %}
+            {% endfor %}
+
+            {% set botName = ""  %}
+            {% set botName2 = ""  %}
+            {% for b in botChamps %}
+                {% set botName =  b.champion1  %}
+                {% set botName2 = b.champion2  %}
+            {% endfor %}
+            <table id="MatchesTable" style="display:none">
+               <tr>
+                   <th>Place</th>
+                   <th>First team</th>
+                   <th>Second team</th>
+                   <th>Stronger</th>
+               </tr>
+               <tr>
+
+                   <td> Top</td>
+                   <td> {{ topName }}</td>
+                   <td> {{ topName2 }}</td>
+                   <td> {{ top }}</td>
+
+               </tr>
+               <tr>
+
+                   <td>Mid</td>
+                   <td> {{ midName }}</td>
+                   <td> {{ midName2 }}</td>
+                   <td> {{ mid }}</td>
+
+               </tr>
+               <tr>
+                   <td>Bottom</td>
+                   <td> {{ botName }}</td>
+                   <td> {{ botName2 }}</td>
+                   <td> {{ bot }}</td>
+               </tr>
+           </table>
+            <table  id="Matches2Table" style="display:none">
+                <tr>
+                    <th>Place</th>
+                    <th>First team</th>
+                    <th>Second team</th>
+                    <th>Stronger</th>
+                </tr>
+                <tr>
+                    {% for c in champions %}
+                        {% if topName == c.name %}
+                            <td> Top</td>
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                    {% for c in champions %}
+                        {% if topName2 == c.name %}
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                    {% for c in champions %}
+                        {% if top == c.name %}
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+
+                <tr>
+                    {% for c in champions %}
+                        {% if midName == c.name %}
+                            <td> Mid </td>
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                    {% for c in champions %}
+                        {% if midName2 == c.name %}
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                    {% for c in champions %}
+                        {% if mid == c.name %}
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for c in champions %}
+                        {% if botName == c.name %}
+                            <td> Bottom</td>
+
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                    {% for c in champions %}
+                        {% if botName2 == c.name %}
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                    {% for c in champions %}
+                        {% if bot == c.name %}
+                            <td> <img src="{{ c.img }}" ></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </table>
+
+            {% set team1Points = 0 %}
+            {% set team2Points = 0 %}
+            {% if top == topName %}
+                {% set team1Points = team1Points +1 %}
+            {% else %}
+                {% set team2Points = team2Points +1 %}
+            {% endif %}
+            {% if mid == midName %}
+                {% set team1Points = team1Points +1 %}
+            {% else %}
+                {% set team2Points = team2Points +1 %}
+            {% endif %}
+            {% if bot == botName %}
+                {% set team1Points = team1Points +1 %}
+            {% else %}
+                {% set team2Points = team2Points +1 %}
+            {% endif %}
+
+            <div id="results" style="display:none">
+                {% if team1Points > team2Points %}
+                Stipresnė pirma komanda
+            {% elseif team1Points < team2Points %}
+                Stipresnė antra komanda
+            {% else %}
+                Komandos apylygės
+            {% endif %}
+            </div>
+            <script>
+                function show(){
+                    document.getElementById("MatchesTable").style.display="table";
+                    document.getElementById("Matches2Table").style.display="table";
+                    document.getElementById("results").style.display="block";
+                }
+                function hide(){
+                    document.getElementById("MatchesTable").style.display="none";
+                    document.getElementById("Matches2Table").style.display="none";
+                    document.getElementById("results").style.display="none";
+                }
+                function gettingValue() {
+                    var test = document.getElementById("name").value;
+                    var test2 = document.getElementById("name2").value;
+                    var test3 = document.getElementById("name3").value;
+                    var test4 = document.getElementById("name4").value;
+                    var test5 = document.getElementById("name5").value;
+                    var test6 = document.getElementById("name6").value;
+                    var newName = test.substr(19);
+                    var newName2 = test2.substr(19);
+                    var newName3 = test3.substr(19);
+                    var newName4 = test4.substr(19);
+                    var newName5 = test5.substr(19);
+                    var newName6 = test6.substr(19);
+                    console.log(newName + "," +newName2);
+                    if (newName == newName2){
+                        window.alert('Choose different Top champs')
+                        throw new Error("Choose different Top champs!");
+
+                    }
+                    if (newName3 == newName4){
+                        window.alert('Choose different Mid champs')
+                        throw new Error("Choose different Mid champs!");
+
+                    }
+                    if (newName5 == newName6){
+                        window.alert('Choose different Bottom champs')
+                        throw new Error("Choose different Bottom champs!");
+
+                    }
+                    console.log({{ team1Points }});
+                    console.log("/matches3x3/"+newName + "," +newName2+ "," +newName3+ "," +newName4
+                            + "," +newName5+ "," +newName6);
+                    window.location.replace("/matches3x3/"+newName + "," +newName2+ "," +newName3+ "," +newName4
+                            + "," +newName5+ "," +newName6);
+
+                    return null;
+                }
+
+            </script>
+        </div>
+    </div>
+{% endblock %}
+
+
+
