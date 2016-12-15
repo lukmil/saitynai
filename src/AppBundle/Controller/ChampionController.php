@@ -20,7 +20,11 @@ class ChampionController extends Controller
         $champi = new champion();
         $strongerChamp = $champ;
         $strongerChamp2 = $champ;
+ if ($stronger != $stronger){
 
+        } else{
+
+        }
         $criteria = ['champion1' => $strongerChamp];
         $criteria2 = ['champion2' => $strongerChamp2];
         $strongerChamp = $this->getDoctrine()
